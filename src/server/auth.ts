@@ -39,17 +39,18 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
-    redirect: async (url, baseUrl) => {
-      // Redirect to specified return URL or default to baseUrl
-      return url.startsWith(baseUrl) ? url : baseUrl;
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
     },
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
+    async session({ session, token, user }) {
+      return session
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return token
+    }
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
@@ -61,14 +62,22 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
-    // Add more providers as needed
+    /**
+     * ...add more providers here.
+     *
+     * Most other providers require a bit more work than the Discord provider. For example, the
+     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
+     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
+     *
+     * @see https://next-auth.js.org/providers/github
+     */
   ],
   pages: {
-    signIn: '/auth/signin',  // Customize this path if needed
-    signOut: '/auth/signout', // Customize this path if needed
-    error: '/auth/error',     // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: null // If set, new users will be directed here on first sign in
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error',
+    verifyRequest: '/auth/verify-request',
+  
   },
 };
 
