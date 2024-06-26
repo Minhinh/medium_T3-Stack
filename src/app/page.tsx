@@ -10,86 +10,83 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen bg-gray-50 text-black">
       <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/background.png')" }}></div>
-      <div className="relative z-10 container mx-auto py-6">
-          <header className="flex items-center justify-between px-4">
-      <div className="flex items-center space-x-2 cursor-pointer">
-        <img src="/medium.webp" alt="Logo" className="h-10 w-50" />
-      </div>
-      <nav className="flex space-x-4">
-        <Link href="/story" className="text-lg">
-          Our story
-        </Link>
-        <Link href="/membership" className="text-lg">
-          Membership
-        </Link>
-        <Link href="/write" className="text-lg">
-          Write
-        </Link>
-        <Link href="/signin" className="text-lg">
-          Sign in
-        </Link>
-        <Link
-          href="/get-started"
-          className="px-4 py-2 text-white bg-black rounded-full"
-        >
-          Get started
-        </Link>
-      </nav>
+      <header className="relative z-10 flex items-center justify-between px-16 py-4 bg-yellow-500">
+        <div className="flex items-center space-x-2 cursor-pointer">
+          <img src="/medium.webp" alt="Logo" className="h-10 w-50" />
+        </div>
+        <nav className="flex space-x-4">
+          <Link href="/story" className="text-lg">
+            Our story
+          </Link>
+          <Link href="/membership" className="text-lg">
+            Membership
+          </Link>
+          <Link href="/write" className="text-lg">
+            Write
+          </Link>
+          <Link href="/signin" className="text-lg">
+            Sign in
+          </Link>
+          <Link
+            href="/get-started"
+            className="px-4 py-2 text-white bg-black rounded-full"
+          >
+            Get started
+          </Link>
+        </nav>
       </header>
+    
 
-        <hr className="mt-4 border-gray-300" />
+      <section className="relative z-10 flex flex-col items-start py-16 px-4">
+        <h1 className="text-8xl font-bold leading-tight">
+          Human
+          <br />
+          <span className="block">stories & ideas</span>
+        </h1>
+        <p className="mt-4 text-xl text-gray-600">
+          A place to read, write, and deepen your understanding
+        </p>
+        <button className="mt-8 px-8 py-3 text-xl text-white bg-black rounded-full">
+          Start reading
+        </button>
+      </section>
 
-        <section className="flex flex-col items-start py-16 px-16">
-          <h1 className="text-8xl  leading-tight">
-            Human
-            <br />
-            <span className="block">stories & ideas</span>
-          </h1>
-          <p className="mt-4 text-xl ">
-            A place to read, write, and deepen your understanding
+      <section className="relative z-10 flex flex-col items-center gap-2 mt-12">
+        <p className="text-2xl">
+          {hello ? hello.greeting : "Loading tRPC query..."}
+        </p>
+
+        <div className="flex flex-col items-center justify-center gap-4">
+          <p className="text-center text-2xl">
+            {session && <span>Logged in as {session.user?.name}</span>}
           </p>
-          <button className="mt-8 px-8 py-3 text-xl text-white bg-black rounded-full">
-            Start reading
-          </button>
-        </section>
+          <Link
+            href={session ? "/api/auth/signout" : "/api/auth/signin"}
+            className="rounded-full bg-gray-800 text-white px-10 py-3 font-semibold no-underline transition hover:bg-gray-700"
+          >
+            {session ? "Sign out" : "Sign in"}
+          </Link>
+        </div>
+      </section>
 
-        <section className="flex flex-col items-center gap-2 mt-12">
-          <p className="text-2xl">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
+      <CrudShowcase />
 
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-gray-800 text-white px-10 py-3 font-semibold no-underline transition hover:bg-gray-700"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </Link>
+      <footer className="relative z-10 mt-16 border-t border-gray-300 py-4 bg-yellow-500">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center space-x-4 text-gray-600">
+            <Link href="/help">Help</Link>
+            <Link href="/status">Status</Link>
+            <Link href="/about">About</Link>
+            <Link href="/careers">Careers</Link>
+            <Link href="/press">Press</Link>
+            <Link href="/blog">Blog</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+            <Link href="/text-to-speech">Text to speech</Link>
+            <Link href="/teams">Teams</Link>
           </div>
-        </section>
-
-        <CrudShowcase />
-
-        <footer className="mt-16 border-t border-gray-300 ">
-          <div className="container mx-auto">
-            <div className="flex justify-center space-x-4 text-gray-600">
-              <Link href="/help">Help</Link>
-              <Link href="/status">Status</Link>
-              <Link href="/about">About</Link>
-              <Link href="/careers">Careers</Link>
-              <Link href="/press">Press</Link>
-              <Link href="/blog">Blog</Link>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/terms">Terms</Link>
-              <Link href="/text-to-speech">Text to speech</Link>
-              <Link href="/teams">Teams</Link>
-            </div>
-          </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </main>
   );
 }
