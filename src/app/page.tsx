@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
@@ -9,14 +8,49 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+    <main className="min-h-screen bg-gray-50 text-black">
+      <div className="container mx-auto py-6">
+        <header className="flex items-center justify-between px-2">
+          <h1 className="text-3xl font-bold">Medium</h1>
+          <nav className="flex space-x-4">
+            <Link href="/story" className="text-lg">
+              Our story
+            </Link>
+            <Link href="/membership" className="text-lg">
+              Membership
+            </Link>
+            <Link href="/write" className="text-lg">
+              Write
+            </Link>
+            <Link href="/signin" className="text-lg">
+              Sign in
+            </Link>
+            <Link
+              href="/get-started"
+              className="px-4 py-2 text-white bg-black rounded-full"
+            >
+              Get started
+            </Link>
+          </nav>
+        </header>
+        <hr className="mt-4 border-gray-300" />
+
+        <section className="relative flex flex-col items-start py-16 px-4 bg-gray-50">
+          <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('/path-to-your-background-image.jpg')" }}></div>
+          <h1 className="text-6xl font-bold leading-tight z-10">
+            Human stories & ideas
+          </h1>
+          <p className="mt-4 text-xl text-gray-600 z-10">
+            A place to read, write, and deepen your understanding
+          </p>
+          <button className="mt-8 px-8 py-3 text-xl text-white bg-black rounded-full z-10">
+            Start reading
+          </button>
+        </section>
+
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 px-4">
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
+            className="flex max-w-xs flex-col gap-4 rounded-xl bg-gray-100 p-4 hover:bg-gray-200"
             href="https://create.t3.gg/en/usage/first-steps"
             target="_blank"
           >
@@ -27,7 +61,7 @@ export default async function Home() {
             </div>
           </Link>
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
+            className="flex max-w-xs flex-col gap-4 rounded-xl bg-gray-100 p-4 hover:bg-gray-200"
             href="https://create.t3.gg/en/introduction"
             target="_blank"
           >
@@ -37,26 +71,44 @@ export default async function Home() {
               deploy it.
             </div>
           </Link>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
+        </section>
+
+        <section className="flex flex-col items-center gap-2 mt-12">
+          <p className="text-2xl">
             {hello ? hello.greeting : "Loading tRPC query..."}
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
+            <p className="text-center text-2xl">
               {session && <span>Logged in as {session.user?.name}</span>}
             </p>
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+              className="rounded-full bg-gray-800 text-white px-10 py-3 font-semibold no-underline transition hover:bg-gray-700"
             >
               {session ? "Sign out" : "Sign in"}
             </Link>
           </div>
-        </div>
+        </section>
 
         <CrudShowcase />
+
+        <footer className="mt-16 border-t border-gray-300 py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center space-x-4 text-gray-600">
+              <Link href="/help">Help</Link>
+              <Link href="/status">Status</Link>
+              <Link href="/about">About</Link>
+              <Link href="/careers">Careers</Link>
+              <Link href="/press">Press</Link>
+              <Link href="/blog">Blog</Link>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
+              <Link href="/text-to-speech">Text to speech</Link>
+              <Link href="/teams">Teams</Link>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
@@ -69,7 +121,7 @@ async function CrudShowcase() {
   const latestPost = await api.post.getLatest();
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full max-w-xs mt-8">
       {latestPost ? (
         <p className="truncate">Your most recent post: {latestPost.name}</p>
       ) : (
