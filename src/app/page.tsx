@@ -24,7 +24,7 @@ export default async function Home() {
           <Link href="/write" className="text-lg">
             Write
           </Link>
-          <Link href="/signin" className="text-lg">
+          <Link href="/api/auth/signin" className="text-lg">
             Sign in
           </Link>
           <Link
