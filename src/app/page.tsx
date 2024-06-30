@@ -8,11 +8,11 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="relative min-h-screen bg-gray-50 text-black">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/background.png')" }}></div>
-      <header className="relative z-10 flex items-center justify-between px-16 py-4 bg-yellow-500">
+    <main className="relative min-h-screen bg-[#f7f4ed] text-black flex flex-col">
+      <div className="absolute inset-0 bg-cover bg-center"></div>
+      <header className="relative z-10 flex items-center justify-between px-4 py-4 bg-[#f7f4ed] border-b border-gray-500">
         <div className="flex items-center space-x-2 cursor-pointer">
-          <img src="/medium.webp" alt="Logo" className="h-10 w-50" />
+          <img src="/medium.webp" alt="Logo" className="h-10" />
         </div>
         <nav className="flex space-x-4">
           <Link href="/story" className="text-lg">
@@ -29,35 +29,36 @@ export default async function Home() {
           </Link>
           <Link
             href="/get-started"
-            className="px-4 py-2 text-white bg-black rounded-full"
+            className="text-lg px-4 text-white bg-black rounded-full"
           >
             Get started
           </Link>
         </nav>
       </header>
-    
 
-      <section className="relative z-10 flex flex-col items-start py-16 px-4">
-        <h1 className="text-8xl font-bold leading-tight">
-          Human
-          <br />
-          <span className="block">stories & ideas</span>
-        </h1>
-        <p className="mt-4 text-xl text-gray-600">
-          A place to read, write, and deepen your understanding
-        </p>
-        <button className="mt-8 px-8 py-3 text-xl text-white bg-black rounded-full">
-          Start reading
-        </button>
-      </section>
+      <section className="relative z-10 flex flex-col items-start justify-center flex-grow px-4 py-8">
+  <h1 className="absolute" style={{ top: '20%', left: '10%' }}>
+    <span className="text-7xl md:text-7xl  leading-tight">
+      Human
+      <br />
+      <span className="block">stories & ideas</span>
+    </span>
+  </h1>
+  <p className="absolute mt-4 text-2xl text-gray-500" style={{ top: '70%', left: '10%' }}>
+    A place to read, write, and deepen your understanding
+  </p>
+  <button className="absolute mt-8 px-8 py-3 text-xl text-white bg-black rounded-full" style={{ top: '80%', left: '10%' }}>
+    Start reading
+  </button>
+</section>
 
-      <section className="relative z-10 flex flex-col items-center gap-2 mt-12">
+
+      <section className="relative z-10 flex flex-col items-start justify-center px-4 py-4">
         <p className="text-2xl">
           {hello ? hello.greeting : "Loading tRPC query..."}
         </p>
-
-        <div className="flex flex-col items-center justify-center gap-4">
-          <p className="text-center text-2xl">
+        <div className="flex flex-col items-start gap-4 mt-4">
+          <p className="text-xl">
             {session && <span>Logged in as {session.user?.name}</span>}
           </p>
           <Link
@@ -69,9 +70,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <CrudShowcase />
-
-      <footer className="relative z-10 mt-16 border-t border-gray-300 py-4 bg-yellow-500">
+      <footer className="relative z-10 py-4 bg-[#f7f4ed] border-t border-gray-300">
         <div className="container mx-auto px-4">
           <div className="flex justify-center space-x-4 text-gray-600">
             <Link href="/help">Help</Link>
