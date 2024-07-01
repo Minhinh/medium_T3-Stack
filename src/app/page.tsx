@@ -3,6 +3,7 @@ import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { Navbar } from "~/app/_components/navbar";
+import { Footer } from "~/app/_components/footer";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -46,23 +47,7 @@ export default async function Home() {
           </Link>
         </div>
       </section>
-
-      <footer className="relative z-10 py-4 bg-[#f7f4ed] border-t border-gray-300">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center space-x-4 text-gray-600">
-            <Link href="/help">Help</Link>
-            <Link href="/status">Status</Link>
-            <Link href="/about">About</Link>
-            <Link href="/careers">Careers</Link>
-            <Link href="/press">Press</Link>
-            <Link href="/blog">Blog</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/text-to-speech">Text to speech</Link>
-            <Link href="/teams">Teams</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import { Navbar } from "../_components/navbar";
-
+import {Footer } from "../_components/footer"
 // app/homepage/page.tsx
 const HomePage = () => {
   return (
@@ -9,6 +9,8 @@ const HomePage = () => {
         <h1 className="text-2xl">Welcome to the homepage!</h1>
         
       </div>
+      <Footer />
+
     </div>
   );
 };
