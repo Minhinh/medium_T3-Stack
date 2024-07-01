@@ -4,11 +4,15 @@ import { useState } from "react";
 import { Navbar } from "../_components/navbar";
 import { Footer } from "../_components/footer";
 import { CreatePost } from "../_components/create-post";
-import { api } from "~/trpc/react"; // Adjust the import path as necessary
-import { format } from "date-fns";
+import { api } from "~/trpc/react";
 
 const HomePage = () => {
   const { data: posts, isLoading, error } = api.post.getAll.useQuery();
+
+  const formatDate = (dateString: string | number | Date) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
 
   return (
     <div>
@@ -23,10 +27,10 @@ const HomePage = () => {
             <h2 className="text-xl font-bold">{post.title}</h2>
             <p className="text-gray-600">{post.name}</p>
             <p className="text-gray-400 text-sm">
-              Created at: {format(new Date(post.createdAt), "PPPppp")}
+              Created at: {formatDate(post.createdAt)}
             </p>
             <p className="text-gray-400 text-sm">
-              Updated at: {format(new Date(post.updatedAt), "PPPppp")}
+              Updated at: {formatDate(post.updatedAt)}
             </p>
           </div>
         ))}
