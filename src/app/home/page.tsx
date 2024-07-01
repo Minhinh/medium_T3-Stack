@@ -1,16 +1,18 @@
 import { Navbar } from "../_components/navbar";
 import { Footer } from "../_components/footer";
-import { postRouter } from "~/server/api/routers/post";
+import { api } from "~/trpc/server";
+import { useRouter } from "next/router";
 
-// app/homepage/page.tsx
 const HomePage = () => {
-  const result = postRouter.getSecretMessage;
+  const name = "Bon";
+  const result = api.post.hello(name);
+
   return (
     <div>
       <Navbar />
-      <div className="flex min-h-screen items-center justify-center bg-[#f7f4ed]">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#f7f4ed]">
+        <h1>{result}</h1>
         <h1 className="text-2xl">Welcome to the homepage!</h1>
-        <h1>{result.toString()}</h1>
       </div>
       <Footer />
     </div>
