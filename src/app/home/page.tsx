@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+
 import { Navbar } from "../_components/navbar";
 import { Footer } from "../_components/footer";
 import { CreatePost } from "../_components/create-post";
@@ -22,7 +22,7 @@ const HomePage = () => {
         <CreatePost />
         {isLoading && <p>Loading...</p>}
         {error && <p>Something went wrong...</p>}
-        {posts && posts.map((post) => (
+        {posts?.map((post)  => (
           <div key={post.id} className="p-4 m-2 border rounded w-full max-w-xl bg-white shadow-md">
             <h2 className="text-xl font-bold">{post.title}</h2>
             <p className="text-gray-600">{post.name}</p>
