@@ -2,39 +2,16 @@ import Link from "next/link";
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
+import { Navbar } from "~/app/_components/navbar";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
   const session = await getServerAuthSession();
-
+  
   return (
     <main className="relative min-h-screen bg-[#f7f4ed] text-black flex flex-col">
       <div className="absolute inset-0 bg-cover bg-center"></div>
-      <header className="relative z-10 flex items-center justify-between px-4 py-4 bg-[#f7f4ed] border-b border-gray-500">
-        <div className="flex items-center space-x-2 cursor-pointer">
-          <img src="/medium.webp" alt="Logo" className="h-10" />
-        </div>
-        <nav className="flex space-x-4">
-          <Link href="/story" className="text-lg">
-            Our story
-          </Link>
-          <Link href="/membership" className="text-lg">
-            Membership
-          </Link>
-          <Link href="/write" className="text-lg">
-            Write
-          </Link>
-          <Link href="/api/auth/signin" className="text-lg">
-            Sign in
-          </Link>
-          <Link
-            href="/get-started"
-            className="text-lg px-4 text-white bg-black rounded-full"
-          >
-            Get started
-          </Link>
-        </nav>
-      </header>
+      <Navbar />
 
       <section className="relative z-10 flex flex-col items-start justify-center flex-grow px-4 py-8">
   <h1 className="absolute" style={{ top: '20%', left: '10%' }}>
