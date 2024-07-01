@@ -6,7 +6,7 @@ export const Navbar = () => {
       <div className="flex items-center space-x-2 cursor-pointer">
         <img src="/medium.webp" alt="Logo" className="h-10" />
       </div>
-      <nav className="flex space-x-4">
+      <nav className="flex space-x-4 items-center">
         <Link href="/story" className="text-lg">
           Our story
         </Link>
@@ -21,7 +21,7 @@ export const Navbar = () => {
         </Link>
         <Link
           href="/api/auth/signin"
-          className="text-lg px-4 text-white bg-black rounded-full"
+          className="text-lg px-4 text-white bg-black rounded-full py-2"
         >
           Get started
         </Link>
