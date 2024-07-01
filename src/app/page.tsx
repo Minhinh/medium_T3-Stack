@@ -8,40 +8,45 @@ import { Footer } from "~/app/_components/footer";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
   const session = await getServerAuthSession();
-  
+
   return (
-    <main className="relative min-h-screen bg-[#f7f4ed] text-black flex flex-col">
+    <main className="relative flex min-h-screen flex-col bg-[#f7f4ed] text-black">
       <div className="absolute inset-0 bg-cover bg-center"></div>
       <Navbar />
 
-      <section className="relative z-10 flex flex-col items-start justify-center flex-grow px-4 py-8">
-  <h1 className="absolute" style={{ top: '20%', left: '10%' }}>
-    <span className="text-7xl md:text-7xl  leading-tight">
-      Human
-      <br />
-      <span className="block">stories & ideas</span>
-    </span>
-  </h1>
-  <p className="absolute mt-4 text-2xl text-gray-500" style={{ top: '70%', left: '10%' }}>
-    A place to read, write, and deepen your understanding
-  </p>
-  <button className="absolute mt-8 px-8 py-3 text-xl text-white bg-black rounded-full" style={{ top: '80%', left: '10%' }}>
-    Start reading
-  </button>
-</section>
-
+      <section className="relative z-10 flex flex-grow flex-col items-start justify-center px-4 py-8">
+        <h1 className="absolute" style={{ top: "20%", left: "10%" }}>
+          <span className="text-7xl leading-tight  md:text-7xl">
+            Human
+            <br />
+            <span className="block">stories & ideas</span>
+          </span>
+        </h1>
+        <p
+          className="absolute mt-4 text-2xl text-gray-500"
+          style={{ top: "70%", left: "10%" }}
+        >
+          A place to read, write, and deepen your understanding
+        </p>
+        <button
+          className="absolute mt-8 rounded-full bg-black px-8 py-3 text-xl text-white"
+          style={{ top: "80%", left: "10%" }}
+        >
+          Start reading
+        </button>
+      </section>
 
       <section className="relative z-10 flex flex-col items-start justify-center px-4 py-4">
         <p className="text-2xl">
           {hello ? hello.greeting : "Loading tRPC query..."}
         </p>
-        <div className="flex flex-col items-start gap-4 mt-4">
+        <div className="mt-4 flex flex-col items-start gap-4">
           <p className="text-xl">
             {session && <span>Logged in as {session.user?.name}</span>}
           </p>
           <Link
             href={session ? "/api/auth/signout" : "/api/auth/signin"}
-            className="rounded-full bg-gray-800 text-white px-10 py-3 font-semibold no-underline transition hover:bg-gray-700"
+            className="rounded-full bg-gray-800 px-10 py-3 font-semibold text-white no-underline transition hover:bg-gray-700"
           >
             {session ? "Sign out" : "Sign in"}
           </Link>
@@ -59,7 +64,7 @@ async function CrudShowcase() {
   const latestPost = await api.post.getLatest();
 
   return (
-    <div className="w-full max-w-xs mt-8">
+    <div className="mt-8 w-full max-w-xs">
       {latestPost ? (
         <p className="truncate">Your most recent post: {latestPost.name}</p>
       ) : (
