@@ -6,13 +6,15 @@ import { Navbar } from "~/app/_components/navbar";
 import { Footer } from "~/app/_components/footer";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await getServerAuthSession();
 
   return (
     <main className="relative flex min-h-screen flex-col bg-[#f7f4ed] text-black">
       <div className="absolute inset-0 bg-cover bg-center"></div>
       <Navbar />
+
+      {/* {CrudShowcase()} */}
+
 
       <section className="relative z-10 flex flex-grow flex-col items-start justify-center px-4 py-8">
         <h1 className="absolute" style={{ top: "20%", left: "10%" }}>
@@ -34,23 +36,6 @@ export default async function Home() {
         >
           Start reading
         </button>
-      </section>
-
-      <section className="relative z-10 flex flex-col items-start justify-center px-4 py-4">
-        <p className="text-2xl">
-          {hello ? hello.greeting : "Loading tRPC query..."}
-        </p>
-        <div className="mt-4 flex flex-col items-start gap-4">
-          <p className="text-xl">
-            {session && <span>Logged in as {session.user?.name}</span>}
-          </p>
-          <Link
-            href={session ? "/api/auth/signout" : "/api/auth/signin"}
-            className="rounded-full bg-gray-800 px-10 py-3 font-semibold text-white no-underline transition hover:bg-gray-700"
-          >
-            {session ? "Sign out" : "Sign in"}
-          </Link>
-        </div>
       </section>
       <Footer />
     </main>
