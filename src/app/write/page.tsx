@@ -20,7 +20,7 @@ const HomePage = () => {
         <div className="w-full max-w-3xl">
           <CreatePost />
         </div>
-        <div className="w-full max-w-3xl mt-8">
+        <div className="w-full max-w-5xl mt-10">
           {isLoading && <p>Loading...</p>}
           {error && <p>Something went wrong...</p>}
           {posts?.map((post) => (
