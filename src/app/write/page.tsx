@@ -16,7 +16,7 @@ const HomePage = () => {
   return (
     <div>
       <Navwrite />
-      <div className="flex flex-col items-center bg-[#f7f4ed] px-4 py-8">
+      <div className="flex flex-col items-center bg-[white] px-4 py-8">
         <div className="w-full max-w-3xl">
           <CreatePost />
         </div>
