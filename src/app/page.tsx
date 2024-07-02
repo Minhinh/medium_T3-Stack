@@ -4,14 +4,44 @@ import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { Navbar } from "~/app/_components/navbar";
 import { Footer } from "~/app/_components/footer";
+import { redirect } from 'next/navigation';
+
+
 
 export default async function Home() {
   const session = await getServerAuthSession();
+  if (session?.user) {
+    redirect('/home');
+  }
 
   return (
     <main className="relative flex min-h-screen flex-col bg-[#f7f4ed] text-black">
       <div className="absolute inset-0 bg-cover bg-center"></div>
-      <Navbar />
+      <header className="relative z-10 flex items-center justify-between px-4 py-4 bg-[#f7f4ed] border-b border-gray-500">
+        <div className="flex items-center space-x-2 cursor-pointer">
+          <img src="/medium.webp" alt="Logo" className="h-10" />
+        </div>
+        <nav className="flex space-x-4 items-center">
+          <Link href="/story" className="text-lg">
+            Our story
+          </Link>
+          <Link href="/membership" className="text-lg">
+            Membership
+          </Link>
+          <Link href="/api/auth/signin" className="text-lg">
+            Write
+          </Link>
+          <Link href="/api/auth/signin" className="text-lg">
+            Sign in
+          </Link>
+          <Link
+            href="/api/auth/signin"
+            className="text-lg px-4 text-white bg-black rounded-full py-2"
+          >
+            Get started
+          </Link>
+        </nav>
+      </header>
 
       {/* {CrudShowcase()} */}
 
