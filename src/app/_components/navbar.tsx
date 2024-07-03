@@ -28,7 +28,7 @@ export const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <header className="relative z-10 flex items-center justify-between px-4 py-2 bg-[#f7f4ed] border-b border-gray-500">
+    <header className="relative z-10 flex items-center justify-between px-4 py-2 bg-white border">
       {/* Logo */}
       <Link className="flex items-center space-x-2" href="/">
         <img src="/medium.webp" alt="Logo" className="h-10" />
@@ -40,7 +40,7 @@ export const Navbar = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="pl-10 pr-2 py-2 rounded-full focus:outline-none"
+            className="pl-10 pr-2 py-2 rounded-full focus:outline-none bg-[#f7f7f7]"
             onFocus={() => setIsFocused(true)} // Track focus
             onBlur={() => setIsFocused(false)} // Track blur
           />

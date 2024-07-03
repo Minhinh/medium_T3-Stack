@@ -5,35 +5,37 @@ import { Footer } from "../_components/footer";
 import { CreatePost } from "../_components/create-post";
 import { api } from "~/trpc/react";
 
-const HomePage = () => {
-  const { data: posts, isLoading, error } = api.post.getAll.useQuery();
+import { PostPreview } from "../_components/post-preview";
 
-  const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
+const HomePage = () => {
+  //const { data: posts, isLoading, error } = api.post.getAll.useQuery();
+
+  // create some fake posts
+  const posts = [  
+    { id: "1", title: "Post 1", name: "John Doe", createdAt: "2022-01-01T00:00:00Z", updatedAt: "2022-01-01T00:00:00Z" },
+    { id: "2", title: "Post 2", name: "Jane Doe", createdAt: "2022-01-01T00:00:00Z", updatedAt: "2022-01-01T00:00:00Z" },
+    { id: "3", title: "Post 3", name: "John Doe", createdAt: "2022-01-01T00:00:00Z", updatedAt: "2022-01-01T00:00:00Z" },
+  ];
 
   return (
     <div>
       <Navbar />
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#f7f4ed]">
-        <h1 className="text-2xl mb-4">Create a New Post</h1>
-        <CreatePost />
-        {isLoading && <p>Loading...</p>}
-        {error && <p>Something went wrong...</p>}
-        {posts?.map((post)  => (
-          <div key={post.id} className="p-4 m-2 border rounded w-full max-w-xl bg-white shadow-md">
-            <h2 className="text-xl font-bold">{post.title}</h2>
-            <p className="text-gray-600">{post.name}</p>
-            <p className="text-gray-400 text-sm">
-              Created at: {formatDate(post.createdAt)}
-            </p>
-            <p className="text-gray-400 text-sm">
-              Updated at: {formatDate(post.updatedAt)}
-            </p>
-          </div>
-        ))}
+
+      <div className="flex min-h-screen max-w-screen-2xl items-center justify-evenly bg-white">
+        {/* Main content - Posts */}
+        <div className="flex flex-col w-7/10">
+          {posts?.map((post) => (
+            <PostPreview post={post} key={post.id} />
+          ))}
+        </div>
+
+        {/* Sidebar or secondary content - takes 3 parts */}
+        <div className="flex w-3/10 border-l-2 border-gray-200 px-10">
+          {/* Sidebar content here */}
+          <p>rrr</p>
+        </div>
       </div>
+
       <Footer />
     </div>
   );
