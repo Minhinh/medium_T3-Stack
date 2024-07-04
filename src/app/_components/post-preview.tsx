@@ -7,13 +7,12 @@ interface Post {
     id: string;
     title: string;
     name: string;
-    createdAt: string; // Assuming these are strings for simplicity
     updatedAt: string;
 }
 
 const formatDate = (dateString: string | number | Date) => {
     const date = new Date(dateString);
-    return date.toLocaleString();
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 
 export const PostPreview = ({ post }: { post: Post }) => {
@@ -28,8 +27,12 @@ export const PostPreview = ({ post }: { post: Post }) => {
                 {/* Content */}
                 <div className="flex items-center">
                     <div>
-                        <h2 className="text-xl font-bold py-4">{post.title}</h2>
-                        <h3 className="text-sm text-gray-500">{formatDate(post.createdAt)}</h3>
+                        <div my-4>
+                            <h2 className="text-2xl font-bold mb-1">{post.title}</h2>
+                            <p className="text-l text-gray-700">Let’s face the uneasy truth: without a deep knowledge of the mathematics behind grinding algorithms and data structures</p>
+                        </div>
+
+                        <h3 className="text-sm text-gray-500">{formatDate(post.updatedAt)}</h3>
                     </div>
                     <Image src="/medium.webp" alt="Post Image" width={160} height={100} />
 
