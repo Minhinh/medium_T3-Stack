@@ -1,41 +1,32 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import slugify from "slugify";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1), name: z.string().min(1) }))
+    .input(z.object({ title: z.string().min(1), name: z.string().min(1), imageUrl: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.post.create({
+      const slug = slugify(input.title, { lower: true }) + '-' + Date.now();
+      const post = await ctx.db.post.create({
         data: {
           title: input.title,
           name: input.name,
-          createdBy: { connect: { id: ctx.session.user.id } },
+          slug,
+          imageUrl: input.imageUrl,
+          createdById: ctx.session.user.id,
         },
       });
+      return post;
     }),
 
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  getBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.db.post.findUnique({
+        where: { slug: input.slug },
+      });
+      return post;
+    }),
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.post.findMany();

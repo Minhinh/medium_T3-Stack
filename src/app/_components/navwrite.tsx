@@ -1,3 +1,4 @@
+'use client';
 import Link from "next/link";
 import { FiSearch, FiEdit, FiBell, FiUser } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
