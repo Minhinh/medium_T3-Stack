@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import AWS from 'aws-sdk';
 import { nanoid } from 'nanoid';
 import { db } from "~/server/db";
@@ -12,13 +12,13 @@ const s3 = new AWS.S3({
 });
 
 export const postRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(z.object({
       name: z.string().min(1),
       title: z.string().min(1),
       fileType: z.string(),
     }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const slug = nanoid();
       const params = {
         Bucket: process.env.AWS_S3_BUCKET_NAME!,
@@ -29,6 +29,7 @@ export const postRouter = createTRPCRouter({
 
       try {
         const url = await s3.getSignedUrlPromise('putObject', params);
+        console.log(`Generated signed URL: ${url}`); // Debug logging
 
         // Create the post in the database
         const post = await db.post.create({
@@ -37,19 +38,20 @@ export const postRouter = createTRPCRouter({
             title: input.title,
             slug,
             imageUrl: `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${slug}.${input.fileType.split('/')[1]}`,
+            createdBy: { connect: { id: ctx.session.user.id } },
           },
         });
 
         return { url, postSlug: post.slug };
       } catch (error) {
-        console.error(error);
+        console.error('Error generating signed URL:', error); // Error logging
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to generate upload URL',
         });
       }
     }),
-  getAll: publicProcedure.query(async () => {
+  getAll: protectedProcedure.query(async () => {
     return db.post.findMany();
   }),
 });

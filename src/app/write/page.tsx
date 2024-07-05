@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { api } from "~/trpc/react"; // Adjust the import path as necessary
+import { useSession, signIn } from "next-auth/react";
+import { api } from "~/trpc/react";
 import { Navwrite } from "../_components/navwrite";
 import {Footer} from "../_components/footer";
 import Image from "next/image";
@@ -17,6 +18,8 @@ const Upload = () => {
   const router = useRouter();
 
   const { mutateAsync: createPost, isPending: isCreatingPost, error: createPostError } = api.post.create.useMutation();
+
+
 
   const buttonDisabled = loading || !file || !name || !title;
 
@@ -56,7 +59,7 @@ const Upload = () => {
       } catch (error) {
         setStatusMessage("Failed");
         setLoading(false);
-        console.error(error);
+        console.error('Error during file upload:', error); // Log error to console
       }
     }
   };
