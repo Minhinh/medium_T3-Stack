@@ -2,7 +2,7 @@
 
 import { Navbar } from "../_components/navbar";
 import { Footer } from "../_components/footer";
-import { CreatePost } from "../_components/create-post";
+
 import { api } from "~/trpc/react";
 
 import { PostPreview } from "../_components/post-preview";

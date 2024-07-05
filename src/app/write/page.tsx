@@ -1,145 +1,19 @@
 'use client';
 
-import { useState } from "react";
-import { useRouter } from 'next/navigation';
-import { useSession, signIn } from "next-auth/react";
-import { api } from "~/trpc/react";
 import { Navwrite } from "../_components/navwrite";
 import {Footer} from "../_components/footer";
-import Image from "next/image";
+import { CreatePost } from "../_components/create-post";
 
-const Upload = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const [statusMessage, setStatusMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const router = useRouter();
-
-  const { mutateAsync: createPost, isPending: isCreatingPost, error: createPostError } = api.post.create.useMutation();
-
-
-
-  const buttonDisabled = loading || !file || !name || !title;
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setStatusMessage("Creating");
-    setLoading(true);
-
-    if (file) {
-      setStatusMessage("Uploading file");
-
-      try {
-        const signedUrlResult = await createPost({
-          name,
-          title,
-          fileType: file.type,
-        });
-
-        const url = signedUrlResult.url;
-        const postSlug = signedUrlResult.postSlug;
-
-        if (url) {
-          await fetch(url, {
-            method: "PUT",
-            body: file,
-            headers: {
-              "Content-Type": file.type || "",
-            },
-          });
-
-          router.push(`/post/${postSlug}`);
-        }
-
-        setStatusMessage("Finished");
-        setLoading(false);
-      } catch (error) {
-        setStatusMessage("Failed");
-        setLoading(false);
-        console.error('Error during file upload:', error); // Log error to console
-      }
-    }
-  };
-
-  const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setFile(file);
-
-    if (fileUrl) {
-      URL.revokeObjectURL(fileUrl);
-    }
-
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setFileUrl(url);
-    } else {
-      setFileUrl(null);
-    }
-  };
-
+const WritePage = () => {
   return (
     <div className="m-auto max-w-screen-2xl flex flex-col min-h-screen bg-white">
       <Navwrite />
       <div className="flex flex-col items-center justify-center py-8">
-        <h2 className="text-4xl font-bold mb-6">Create a New Post</h2>
-        <form
-          className="flex flex-col gap-4 w-full max-w-3xl"
-          action="/src/write"
-          method="post"
-          encType="multipart/form-data"
-          onSubmit={handleSubmit}
-        >
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="rounded-full w-full text-2xl px-4 py-2 border focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="rounded-full w-full text-4xl font-bold px-4 py-2 border focus:outline-none"
-          />
-          <textarea
-            placeholder="Tell your story..."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full h-96 text-xl px-4 py-2 border focus:outline-none"
-          />
-          <input
-            type="file"
-            name="media"
-            accept="image/jpeg, image/png"
-            onChange={onHandleChange}
-            className="mb-4"
-          />
-          <button
-            type="submit"
-            className={`rounded-full px-6 py-3 font-semibold text-white transition ${
-              buttonDisabled ? "bg-gray-500" : "bg-green-500 hover:bg-green-600"
-            }`}
-            disabled={buttonDisabled}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-          {statusMessage && <p className="text-red-500">{statusMessage}</p>}
-        </form>
-        {fileUrl && (
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Preview</h2>
-            <Image src={fileUrl} alt="preview" width={200} height={200} />
-          </div>
-        )}
+        <CreatePost />
       </div>
       <Footer />
     </div>
   );
 };
 
-export default Upload;
+export default WritePage;
