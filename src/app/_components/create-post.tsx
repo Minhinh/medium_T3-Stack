@@ -7,7 +7,6 @@ import { api } from "~/trpc/react";
 import Image from "next/image";
 
 export const CreatePost = () => {
-
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState("");
@@ -17,6 +16,7 @@ export const CreatePost = () => {
   const router = useRouter();
 
   const { mutateAsync: createPost, isPending: isCreatingPost, error: createPostError } = api.post.create.useMutation();
+
 
   const buttonDisabled = loading || !file || !name || !title;
 
@@ -44,7 +44,7 @@ export const CreatePost = () => {
             method: "PUT",
             body: file,
             headers: {
-              "Content-Type": file.type || "",
+              "Content-Type": file.type ?? "",
             },
           });
 
@@ -62,7 +62,7 @@ export const CreatePost = () => {
   };
 
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
+    const file = e.target.files?.[0] ?? null;
     setFile(file);
 
     if (fileUrl) {
