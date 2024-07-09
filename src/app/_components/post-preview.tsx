@@ -16,7 +16,7 @@ const formatDate = (dateString: string | number | Date) => {
 
 export const PostPreview = ({ post }: { post: Post }) => {
   return (
-    <Link href={`/post/${post.id}`}>
+    <Link href={`/post/${post.slug}`}>
       <div className="m-2 border-b p-3">
         {/* Author */}
         <div className="flex items-center">
@@ -26,7 +26,7 @@ export const PostPreview = ({ post }: { post: Post }) => {
         {/* Content */}
         <div className="flex items-center">
           <div>
-            <div my-4>
+            <div className = "my-4">
               <h2 className="mb-1 text-2xl font-bold">{post.title}</h2>
               <p className="text-l text-gray-700">
                 Let’s face the uneasy truth: without a deep knowledge of the

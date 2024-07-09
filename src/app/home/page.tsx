@@ -8,29 +8,8 @@ import { api } from "~/trpc/react";
 import { PostPreview } from "../_components/post-preview";
 
 const HomePage = () => {
-  //const { data: posts, isLoading, error } = api.post.getAll.useQuery();
-
-  // create some fake posts
-  const posts = [
-    {
-      id: "1",
-      title: "Post 1",
-      name: "John Doe",
-      updatedAt: "2022-01-01T00:00:00Z",
-    },
-    {
-      id: "2",
-      title: "Post 2",
-      name: "Jane Doe",
-      updatedAt: "2022-01-01T00:00:00Z",
-    },
-    {
-      id: "3",
-      title: "Post 3",
-      name: "John Doe",
-      updatedAt: "2022-01-01T00:00:00Z",
-    },
-  ];
+  const { data: posts, isLoading, error } = api.post.getAll.useQuery();
+  console.log(posts);
 
   return (
     <div>
