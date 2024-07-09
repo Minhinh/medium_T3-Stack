@@ -54,4 +54,11 @@ export const postRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     return db.post.findMany();
   }),
+  getByUser: protectedProcedure.query(async ({ ctx }) => {
+    return db.post.findMany({
+      where: {
+        createdById: ctx.session.user.id,
+      },
+    });
+  }),
 });
