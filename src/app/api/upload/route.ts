@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'You need to be signed in' }, { status: 401 });
   }
 
-  const { name, title, fileType } = await req.json();
+  const { name, title, fileType }: { name: string; title: string; fileType: string } = await req.json();
 
   if (!name || !title || !fileType) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -22,12 +22,15 @@ export async function POST(req: NextRequest) {
   const key = `${slug}.${fileType.split('/')[1]}`;
 
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Bucket: process.env.AWS_S3_BUCKET_NAME!,
     Key: key,
     ContentType: fileType,
   });
 
-  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-
-  return NextResponse.json({ url, key });
+  try {
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    return NextResponse.json({ url, key });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to generate upload URL' }, { status: 500 });
+  }
 }

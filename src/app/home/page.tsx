@@ -6,10 +6,7 @@ import { api } from "~/trpc/react";
 import { PostPreview } from "../_components/post-preview";
 
 const HomePage = () => {
-  const { data: posts, isLoading, error } = api.post.getAll.useQuery();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading posts</div>;
+  const { data: posts} = api.post.getAll.useQuery();
 
   // Fake data for UI on the right
   const fakeData = [
