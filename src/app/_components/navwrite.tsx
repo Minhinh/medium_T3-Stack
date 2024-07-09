@@ -3,7 +3,6 @@ import Link from "next/link";
 import { FiSearch, FiEdit, FiBell, FiUser } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
 import ProfileDropdown from "./profile-dropdown"; // Import the ProfileDropdown component
 
 export const Navwrite = () => {
