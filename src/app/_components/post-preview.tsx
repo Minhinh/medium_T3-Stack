@@ -38,7 +38,7 @@ export const PostPreview = ({ post }: { post: Post }) => {
               {formatDate(post.updatedAt)}
             </h3>
           </div>
-          <Image src="/medium.webp" alt="Post Image" width={160} height={100} />
+          {<img src={post.imageUrl} alt={post.title} width={160} height={100} className="mb-4" />}
         </div>
       </div>
     </Link>
