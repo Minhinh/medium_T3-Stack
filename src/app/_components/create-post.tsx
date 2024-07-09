@@ -109,7 +109,7 @@ export const CreatePost = () => {
           />
           {fileUrl && (
           <div className="mt-8">
-            <Image src={fileUrl} alt="preview" width={200} height={200} />
+            <Image src={fileUrl} alt="preview" width={500} height={500} />
           </div>
         )}
           <button

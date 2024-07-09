@@ -4,40 +4,7 @@ import { FiSearch, FiEdit, FiBell, FiUser } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-
-const ProfileDropdown = () => {
-  const handleSignOut = async () => {
-    await signOut({ redirect: true, callbackUrl: "/" });
-  };
-  return (
-    <div className="absolute right-0 top-14 w-48 rounded-lg border border-gray-300 bg-white shadow-lg">
-      <Link
-        href="/profile"
-        className="block px-4 py-2 text-gray-600 hover:text-black"
-      >
-        Profile
-      </Link>
-      <Link
-        href="/settings"
-        className="block px-4 py-2 text-gray-600 hover:text-black"
-      >
-        Settings
-      </Link>
-      <button
-        onClick={handleSignOut}
-        className="block w-full px-4 py-2 text-left text-gray-600 hover:text-black"
-      >
-        Sign Out
-      </button>
-      <Link
-        href="/settings"
-        className="block px-4 py-2 text-gray-600 hover:text-black"
-      >
-        Set
-      </Link>
-    </div>
-  );
-};
+import ProfileDropdown from "./profile-dropdown"; // Import the ProfileDropdown component
 
 export const Navwrite = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -67,7 +34,7 @@ export const Navwrite = () => {
           >
             <FaRegUserCircle className="h-6 w-6" />
           </button>
-          {isDropdownOpen && <ProfileDropdown />}
+          {isDropdownOpen && <ProfileDropdown />} {/* Render ProfileDropdown when isDropdownOpen is true */}
         </div>
       </nav>
     </header>
