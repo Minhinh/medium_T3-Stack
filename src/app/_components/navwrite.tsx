@@ -29,6 +29,12 @@ const ProfileDropdown = () => {
       >
         Sign Out
       </button>
+      <Link
+        href="/settings"
+        className="block px-4 py-2 text-gray-600 hover:text-black"
+      >
+        Set
+      </Link>
     </div>
   );
 };

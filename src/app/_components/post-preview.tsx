@@ -1,46 +1,19 @@
-import Link from "next/link";
-import Image from "next/image";
-import { FiUser } from "react-icons/fi";
+'use client';
 
-interface Post {
-  id: string;
-  title: string;
-  name: string;
-  updatedAt: string;
-}
-
-const formatDate = (dateString: string | number | Date) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-};
-
-export const PostPreview = ({ post }: { post: Post }) => {
+export const PostPreview = ({ post }) => {
   return (
-    <Link href={`/post/${post.slug}`}>
-      <div className="m-2 border-b p-3">
-        {/* Author */}
-        <div className="flex items-center">
-          <FiUser className="inline-block" />
-          <p className="px-1 text-sm">{post.name}</p>
-        </div>
-        {/* Content */}
-        <div className="flex items-center">
-          <div>
-            <div className = "my-4">
-              <h2 className="mb-1 text-2xl font-bold">{post.title}</h2>
-              <p className="text-l text-gray-700">
-                Let’s face the uneasy truth: without a deep knowledge of the
-                mathematics behind grinding algorithms and data structures
-              </p>
-            </div>
-
-            <h3 className="text-sm text-gray-500">
-              {formatDate(post.updatedAt)}
-            </h3>
-          </div>
-          {<img src={post.imageUrl} alt={post.title} width={160} height={100} className="mb-4" />}
-        </div>
-      </div>
-    </Link>
+    <div className="p-4 mb-6 border rounded bg-white shadow-md">
+      <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
+      <p className="text-gray-600 mb-4">{post.name}</p>
+      {post.imageUrl && (
+        <img src={post.imageUrl} alt={post.title} className="w-full h-auto mb-4"/>
+      )}
+      <p className="text-gray-400 text-sm">
+        Created at: {new Date(post.createdAt).toLocaleString()}
+      </p>
+      <p className="text-gray-400 text-sm">
+        Updated at: {new Date(post.updatedAt).toLocaleString()}
+      </p>
+    </div>
   );
 };

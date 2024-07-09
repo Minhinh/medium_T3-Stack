@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 import { Navbar } from "../_components/navbar";
 import { Footer } from "../_components/footer";
-
 import { api } from "~/trpc/react";
-
 import { PostPreview } from "../_components/post-preview";
 
 const HomePage = () => {
   const { data: posts, isLoading, error } = api.post.getAll.useQuery();
-  console.log(posts);
+  
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading posts</div>;
 
   return (
     <div>
@@ -44,7 +44,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

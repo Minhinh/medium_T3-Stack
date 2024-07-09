@@ -80,7 +80,6 @@ export const CreatePost = () => {
   return (
     <div className="flex flex-col items-center bg-[white] px-4 py-8">
       <div className="w-full max-w-3xl">
-        <h2 className="text-4xl font-bold mb-6">Create a New Post</h2>
         <form
           className="flex flex-col gap-4 w-full"
           action="/src/write"
@@ -90,23 +89,16 @@ export const CreatePost = () => {
         >
           <input
             type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="rounded-full w-full text-2xl px-4 py-2 border focus:outline-none"
-          />
-          <input
-            type="text"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="rounded-full w-full text-4xl font-bold px-4 py-2 border focus:outline-none"
+            className="rounded-full w-full text-4xl font-bold px-4 py-2  focus:outline-none"
           />
           <textarea
             placeholder="Tell your story..."
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full h-96 text-xl px-4 py-2 border focus:outline-none"
+            className="w-full h-96 text-xl px-4 py-2  focus:outline-none"
           />
           <input
             type="file"
@@ -115,6 +107,11 @@ export const CreatePost = () => {
             onChange={onHandleChange}
             className="mb-4"
           />
+          {fileUrl && (
+          <div className="mt-8">
+            <Image src={fileUrl} alt="preview" width={200} height={200} />
+          </div>
+        )}
           <button
             type="submit"
             className={`rounded-full px-6 py-3 font-semibold text-white transition ${
@@ -125,13 +122,9 @@ export const CreatePost = () => {
             {loading ? "Submitting..." : "Submit"}
           </button>
           {statusMessage && <p className="text-red-500">{statusMessage}</p>}
+          
         </form>
-        {fileUrl && (
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Preview</h2>
-            <Image src={fileUrl} alt="preview" width={200} height={200} />
-          </div>
-        )}
+
       </div>
     </div>
   );
